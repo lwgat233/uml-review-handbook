@@ -1,0 +1,94 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 结构类第 1 张：类图（Class Diagram）
+' 依据：/vol1/1000/airesults/mark-readnotes/docs/功能规格.md、数据模型.md、assets/ui/registry.js
+!pragma layout smetana
+title 类图：随笔 App 的领域模型与两三个服务
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+
+package 随笔域 {
+  class "主题（Topic）" as Topic {
+    + 标题 : 文本
+    + 标签 : 文本[1..*]
+    + 创建时间 : 时间
+    + 修改时间 : 时间
+  }
+
+  abstract class "块（Block）" as Block {
+    + 行号 : 整数
+    + 编号 : 文本  <<编号前缀待确认>>
+    + 正文 : 文本
+  }
+
+  class "链接块（LinkBlock）" as LinkBlock
+  class "提问块（QuestionBlock）" as QBlock
+  class "回答块（AnswerBlock）" as ABlock
+  class "概念块（ConceptBlock）" as CBlock
+  class "观点块（ViewpointBlock）" as VBlock
+
+  class "标签（Tag）" as Tag {
+    + 名称 : 文本
+  }
+
+  class "文件夹（Folder）" as Folder {
+    + 名称 : 文本
+  }
+}
+
+package 存储 {
+  class "笔记文件（NoteFile）" as NoteFile {
+    + 相对路径 : 文本
+    + 内容 : markdown
+  }
+  class "索引库（IndexDb）" as IndexDb {
+    + 块行 : 表
+    + 文件行 : 表
+    + 来源行 : 表
+  }
+}
+
+package 服务 {
+  class "笔记库（NoteStore）" as NoteStore {
+    + 读块(编号)
+    + 保存块(块)
+    + 整理旧布局()
+  }
+  class "导出器（Exporter）" as Exporter {
+    + 计划(排除标签)
+    + 写目录(目录)
+    + 分享()
+  }
+  class "同步器（SyncClient）" as SyncClient {
+    + 比对基线()
+    + 上传() / 下载()
+    + 保留本地() / 保留远端() / 跳过()
+  }
+}
+
+Topic "1" *-- "1..*" Block : 主题由块组成
+QBlock --|> Block
+ABlock --|> Block
+LinkBlock --|> Block
+CBlock --|> Block
+VBlock --|> Block
+ABlock "0..*" --> "1" QBlock : 回答针对提问
+Topic "1..*" -- "1..*" Tag : 主题带多个标签
+Tag "1" -- "1" NoteFile : 一个标签一个文件
+Tag "0..*" -- "0..*" Folder : 标签映射到文件夹
+NoteFile "1..*" -- "1" Folder : 文件放在文件夹里
+
+NoteStore --> NoteFile : 写回 markdown（文件是权威源）
+NoteStore --> IndexDb : 维护索引
+Exporter --> NoteStore : 读块、按标签出目录
+SyncClient --> NoteFile : 上传/下载文件
+SyncClient ..> "远端 WebDAV（RemoteWebDav）" : 用基线 + 冲突三选
+
+note bottom of Block
+  五类块每块独占一行、行首带编号；
+  概念块 / 观点块的编号前缀与「插入后是否重排」
+  口径本人还没拍（登记 P25）⇒ 标「待确认」。
+end note
+
+@enduml

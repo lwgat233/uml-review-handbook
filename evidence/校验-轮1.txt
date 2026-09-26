@@ -1,0 +1,63 @@
+# uml-复习手册 第 1 轮 语法校验读数（2026-09-26 17:41:23）
+工具: /home/lwgat/tools/jdk-17.0.2/bin/java（17.0.2）＋ /vol1/1000/aicache/tools/plantuml.jar
+
+=== -checkonly src/class-diagram.puml
+rc=0
+=== -checkonly src/use-case-diagram.puml
+rc=0
+=== -checkonly src/sequence-diagram.puml
+rc=0
+
+=== -tsvg 导出
+rc=0
+rc=0
+rc=0
+
+=== figures/ 产物
+total 192
+---------- 1 lwgat Users 40137 Sep 26 17:41 class-diagram.svg
+---------- 1 lwgat Users 21091 Sep 26 17:41 sequence-diagram.svg
+---------- 1 lwgat Users 15530 Sep 26 17:41 use-case-diagram.svg
+=== 文件类型
+figures/class-diagram.svg:    SVG Scalable Vector Graphics image
+figures/sequence-diagram.svg: SVG Scalable Vector Graphics image
+figures/use-case-diagram.svg: SVG Scalable Vector Graphics image
+figures/class-diagram.svg:1
+figures/sequence-diagram.svg:1
+figures/use-case-diagram.svg:1
+
+=== 交付自检（2026-09-26 17:42:01）
+-- 四样齐全（每份文档须含 ① ② ③ ④ 四个小节）:
+   docs/02-类图.md 小节数=4
+   docs/03-用例图.md 小节数=4
+   docs/04-时序图.md 小节数=4
+-- 「选哪种图」对照表覆盖 14 种（表里出现的图名计数）:
+   类图   6
+   对象图 3
+   包图   3
+   组件图 3
+   部署图 3
+   组合结构图 3
+   制品图 3
+   用例图 6
+   活动图 4
+   状态机图 3
+   时序图 5
+   通信图 3
+   交互概览图 3
+   定时图 3
+-- 源/图 文件:
+figures/class-diagram.svg
+figures/sequence-diagram.svg
+figures/use-case-diagram.svg
+src/class-diagram.puml
+src/sequence-diagram.puml
+src/use-case-diagram.puml
+-- 每个 svg 里的 <svg 数量（应为 1＝一块只画一张图）:
+figures/class-diagram.svg:1
+figures/sequence-diagram.svg:1
+figures/use-case-diagram.svg:1
+-- 校验 rc（重跑一次，读数见上）:
+   src/class-diagram.puml rc=0
+   src/sequence-diagram.puml rc=0
+   src/use-case-diagram.puml rc=0

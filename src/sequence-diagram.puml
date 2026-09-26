@@ -1,0 +1,48 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 行为类第 2 张：时序图（Sequence Diagram）—— 改第一个标签＝整块搬家
+' 依据：mark-readnotes 的 op 层名字 blk.get / blk.save / idx.refresh（assets/ui 与 ops/）
+title 时序图：在白板里把第一个标签从「web」改成「paper」，退出时保存
+
+skinparam shadowing false
+skinparam maxMessageSize 140
+
+actor "用户" as U
+participant "主页（Home）" as Home
+participant "白板（Board）" as Board
+participant "op 层（BlockOps）" as Ops
+participant "笔记库（NoteStore）" as Store
+participant "索引库（IndexDb）" as Db
+participant "笔记文件（.md）" as File
+
+U -> Home : 点一条随笔卡片
+Home -> Ops : blk.get(块 id)
+Ops -> Db : 查块行（懒扫描：冷启动不扫目录）
+Db --> Ops : 块内容 + 所属文件
+Ops --> Home : 块数据
+Home -> Board : 打开全屏白板
+Board --> U : 显示标题、标签、正文
+
+U -> Board : 第一个标签改成 paper
+U -> Board : 点「完成」
+Board -> Ops : blk.save(标题, 标签, 正文)
+Ops -> Store : 保存块
+Store -> File : web.md 里删掉这块
+Store -> File : paper.md 里写上这块（同名则合并）
+Store -> Db : 更新块的所属文件与修改时间
+Db --> Store : 已更新
+Store --> Ops : 保存成功
+Ops --> Board : 完成
+Board --> Home : 收白板
+Home -> Ops : idx.refresh 或读索引
+Ops -> Db : 取最近编辑的块
+Db --> Ops : 新的列表
+Ops --> Home : 列表数据
+Home --> U : 主页里这条随笔已在「paper」下
+
+note over Store
+  文件是唯一权威：搬家＝旧文件删块、新文件写块；
+  索引只是副本，写完再更新，坏了可以重建。
+end note
+
+@enduml

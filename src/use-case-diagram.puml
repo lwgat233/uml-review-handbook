@@ -1,0 +1,54 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 行为类第 1 张：用例图（Use Case Diagram）
+!pragma layout smetana
+title 用例图：记随笔的人能用这个 App 做什么
+
+left to right direction
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+actor "用户（记随笔的人）" as User
+actor "远端 WebDAV 服务" as Dav
+
+rectangle "随笔 App（mark-readnotes）" {
+  usecase "选笔记目录" as UC1
+  usecase "新建随笔" as UC2
+  usecase "打开并编辑随笔" as UC3
+  usecase "预览渲染效果" as UC4
+  usecase "按标题/标签/正文搜索" as UC5
+  usecase "改标签（整块搬家）" as UC6
+  usecase "删除随笔" as UC7
+  usecase "管理标签（改名/合并/删）" as UC8
+  usecase "刷新索引" as UC9
+  usecase "整理旧布局" as UC10
+  usecase "按标签导出" as UC11
+  usecase "排除某些标签" as UC12
+  usecase "系统分享给别人" as UC13
+  usecase "同步到自己的网盘" as UC14
+  usecase "处理同步冲突" as UC15
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC5
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
+User --> UC11
+User --> UC14
+UC3 --> UC4 : <<包含>>
+UC3 --> UC6 : <<扩展>>
+UC11 --> UC12 : <<扩展>>
+UC11 --> UC13 : <<扩展>>
+UC14 --> UC15 : <<扩展>>
+UC14 --> Dav : 上传 / 下载文件
+
+note bottom of UC11
+  导出目录层级＝标签顺序（第 1 个标签一级、第 2 个二级），
+  文件名＝标题；「导出并预览」只是先看，不写盘。
+end note
+
+@enduml
