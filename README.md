@@ -24,5 +24,11 @@
 - `src/class-diagram.puml` · `src/use-case-diagram.puml` · `src/sequence-diagram.puml` → `figures/*.svg`（3 张）
 - `evidence/校验-轮1.txt`：`-checkonly` rc=0（3/3）、`-tsvg` rc=0（3/3）
 
+## 第 2 轮交付（2026-09-26/27）
+
+- `docs/05-对象图.md` · `docs/06-包图.md` · `docs/07-组件图.md` · `docs/08-部署图.md`：每张四样齐全（一句话 / 关键元素（术语中文）/ 共用例子最小示例 / 源与校验）
+- `src/object-diagram.puml` · `src/package-diagram.puml` · `src/component-diagram.puml` · `src/deployment-diagram.puml` → `figures/*.svg`（本轮 4 张，累计 7 张）
+- `evidence/校验-轮2.txt`：`-checkonly` rc=0（4/4）、`-tsvg` rc=0（4/4）、四节四样自检 4/4
+
 ## 工具（已就位，不许联网下）
 `/home/lwgat/tools/jdk-17.0.2/bin/java` ＋ `/vol1/1000/aicache/tools/plantuml.jar`（1.2024.8）；配方见 `roles-chat/env/UML建模-环境配方.md`，坑见 `roles-chat/experiences/research.investigator/UML交付与语法自测.md`。

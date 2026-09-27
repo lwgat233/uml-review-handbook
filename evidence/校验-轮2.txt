@@ -1,0 +1,59 @@
+# uml-复习手册 第 2 轮（对象图/包图/组件图/部署图）语法校验读数（2026-09-27 20:45:20）
+工具: /home/lwgat/tools/jdk-17.0.2/bin/java（17.0.2）＋ /vol1/1000/aicache/tools/plantuml.jar（1.2024.8）
+
+=== -checkonly src/object-diagram.puml
+rc=0
+=== -checkonly src/package-diagram.puml
+rc=0
+=== -checkonly src/component-diagram.puml
+rc=0
+=== -checkonly src/deployment-diagram.puml
+rc=0
+
+=== -tsvg 导出
+src/object-diagram.puml rc=0
+src/package-diagram.puml rc=0
+src/component-diagram.puml rc=0
+src/deployment-diagram.puml rc=0
+
+=== figures/ 产物（含字节数）
+  figures/class-diagram.svg 40137 bytes
+  figures/component-diagram.svg 15321 bytes
+  figures/deployment-diagram.svg 24591 bytes
+  figures/object-diagram.svg 14215 bytes
+  figures/package-diagram.svg 32827 bytes
+  figures/sequence-diagram.svg 21091 bytes
+  figures/use-case-diagram.svg 15530 bytes
+=== 每个 svg 的 <svg 计数（应=1）
+figures/object-diagram.svg:1
+figures/package-diagram.svg:1
+figures/component-diagram.svg:1
+figures/deployment-diagram.svg:1
+
+=== 四节四样自检（2026-09-27 20:46:02）
+  docs/05-对象图.md 小节数=4/4
+  docs/06-包图.md 小节数=4/4
+  docs/07-组件图.md 小节数=4/4
+  docs/08-部署图.md 小节数=4/4
+-- 四份文档都指向同一共用例子（随笔 App / mark-readnotes）:
+docs/05-对象图.md:0
+docs/06-包图.md:1
+docs/07-组件图.md:1
+docs/08-部署图.md:2
+-- 源与图:
+  src/component-diagram.puml 1941 bytes
+  src/deployment-diagram.puml 2091 bytes
+  src/object-diagram.puml 1782 bytes
+  src/package-diagram.puml 1819 bytes
+-- 轮2 四个 rc（重跑，前文亦记）:
+  src/object-diagram.puml rc=0
+  src/package-diagram.puml rc=0
+  src/component-diagram.puml rc=0
+  src/deployment-diagram.puml rc=0
+-- 全部 7 张图的 svg 清单:
+7
+-- 复检（共用例子出现次数）2026-09-27 20:46:22
+docs/05-对象图.md:1
+docs/06-包图.md:1
+docs/07-组件图.md:1
+docs/08-部署图.md:2

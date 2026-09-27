@@ -1,0 +1,56 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 结构类第 4 张：组件图（Component Diagram）
+!pragma layout smetana
+title 组件图：系统由哪几个可替换的大件组成、各自给什么接口
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+package "随笔 App（mark-readnotes）" {
+  component "前端界面（WebView + assets/ui）" as FE
+  component "op 路由器（OpsRouter）" as ROUTER
+  component "笔记库（NotesRepo）" as NOTES
+  component "导出器（ExportRepo）" as EXPORT
+  component "同步器（SyncRepo）" as SYNC
+  component "索引库（SQLite / Db）" as DB
+  component "外壳桥（WebShell / SafPicker / ShareIntent）" as SHELL
+}
+
+component "WebDAV 客户端（WebDavClient）" as DAVC
+component "系统文档访问（Android SAF）" as SAF
+component "系统分享与浏览器" as SYS
+
+interface "op 协议（blk.* / idx.* / exp.* / sync.*）" as IOP
+interface "文件读写（SAF 文档树）" as IFILE
+interface "WebDAV（HTTP/HTTPS）" as IWEBDAV
+interface "分享 / 跳转（Intent）" as IINTENT
+
+' 提供与需要的接口（球＝提供，插座＝需要）
+ROUTER -up- IOP
+FE ..> IOP : 需要（界面只说话不做活）
+FE ..> IINTENT
+NOTES -up- IFILE
+NOTES --> DB : 读写索引
+EXPORT --> NOTES : 取块、按标签出目录
+SYNC --> NOTES : 取/写文件
+SYNC --> DAVC : 走 WebDAV 客户端
+DAVC -up- IWEBDAV
+SHELL -up- IINTENT
+SHELL ..> IFILE : 选目录 / 取文件流
+SAF -up- IFILE
+SYS -up- IINTENT
+
+note bottom of FE
+  组件图看的是“可替换的大件”：
+  比如把同步器换成另一个实现（S3 也好、坚果云也好），
+  只要还提供/需要同样的接口，界面与笔记库都不用改。
+end note
+
+note right of ROUTER
+  所有入口（界面、以后的控制口、脚本）
+  都从这一套 op 走 —— 所以“界面上验过的”
+  等于“脚本也验过的”。
+end note
+
+@enduml

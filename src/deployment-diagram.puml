@@ -1,0 +1,58 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 结构类第 5 张：部署图（Deployment Diagram）
+!pragma layout smetana
+title 部署图：这些东西各自跑在哪台设备上
+
+skinparam shadowing false
+
+node "手机（用户设备，Android）" as PHONE {
+  artifact "mark-readnotes-debug.apk" as APK {
+    component "前端（WebView 里的 assets/ui）" as FE
+    component "原生层（ops / notes / export / sync）" as NAT
+  }
+  database "索引库（应用私有目录里的 SQLite）" as IDB
+  folder "笔记目录（用户选的，SAF 持久授权）" as VAULT {
+    folder "随笔/" as SEI
+    artifact "paper.md / web.md …" as MD
+  }
+}
+
+node "WebDAV 服务器（坚果云等）" as CLOUD {
+  artifact "同步副本（md 文件）" as COPY
+}
+
+node "电脑（可选，同一个笔记目录）" as PC {
+  artifact "Obsidian / VS Code / Typora" as EDITOR
+}
+
+cloud "系统分享目标（聊天 / 邮件 / 网盘 App）" as SHARE
+
+node "开发机：飞牛 NAS（只参与构建与验收，不参与日常运行）" as DEV {
+  artifact "Gradle 构建 + adb + 模拟器（emulator-5554）" as BUILD
+  artifact "分板块验收脚本 tools/boards/*.sh" as VERIFY
+}
+
+FE -down- NAT : 应用内调用（JS 桥）
+NAT --> IDB : 读写索引（懒扫描，冷启动不扫目录）
+NAT --> SEI : 写回 md（文件是权威源）
+MD .. SEI
+NAT ..> SHARE : 系统分享（FileProvider）
+NAT ..> CLOUD : WebDAV 同步（基线 + 冲突三选）
+COPY ..> CLOUD
+SEI ..> EDITOR : 同一批 .md，别的编辑器也能改（可换机器）
+DEV ..> PHONE : 装包 / 验收（不参与运行期）
+
+note right of VAULT
+  「部署」在这里的含义：**文件放在哪、谁能碰它**。
+  笔记目录是用户自己挑的可见目录（可以是本地，
+  也可以是网络盘/同步盘），App 只有被授权的这一份访问权。
+end note
+
+note bottom of DEV
+  把开发机画进来是为了标边界：
+  NAS 只负责**构建与验收**（Gradle + 模拟器 + 分板块脚本），
+  手机才是真正跑 App 的地方。
+end note
+
+@enduml

@@ -1,0 +1,77 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 结构类第 3 张：包图（Package Diagram）
+!pragma layout smetana
+title 包图：代码怎么分层、只允许上层调下层
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+package "apk 里的前端（assets/ui）" as UI {
+  package "界面层" as L4 {
+    [home.js 主页]
+    [board.js 白板]
+    [render.js 渲染]
+    [settings.js 设置]
+    [sync.js 同步]
+    [export.js 导出]
+    [registry.js 功能登记表]
+  }
+  package "三方库（vendor）" as VEN {
+    [markdown-it]
+    [markdown-it-texmath]
+    [markdown-it-task-lists]
+    [KaTeX]
+  }
+}
+
+package "原生层（java/dev/markreadnotes）" as NAT {
+  package "op 层（ops）" as OPS {
+    [OpsRouter]
+    [BlockOps]
+    [SourceOps]
+    [ExportOps]
+    [SyncOps]
+    [AppOps]
+  }
+  package "能力层（服务与存储）" as CAP {
+    [notes/NotesRepo]
+    [export/ExportRepo]
+    [sync/SyncRepo]
+    [sync/WebDavClient]
+    [Store / Db / Saf / Md]
+  }
+  package "外壳（shell）" as SHELL {
+    [WebShell]
+    [SafPicker]
+    [ShareIntent]
+  }
+}
+
+package "安卓系统" as SYS {
+  [SAF 文档访问]
+  [系统分享]
+  [系统浏览器]
+}
+
+interface "op 协议：blk.* / idx.* / exp.* / sync.* / app.info" as OPIF
+
+L4 --> OPIF : 界面只通过 op 说话
+OPIF --> OPS
+OPS --> CAP : op 调能力层
+SHELL --> SYS : 走系统接口
+CAP --> SYS : 读写文件 / 分享 / 跳转
+L4 ..> VEN : 渲染用（离线内置）
+
+note bottom of L4
+  包图的用处：一眼看出“谁依赖谁”。
+  本项目的硬规矩：**只允许上层调下层**，
+  界面不允许直接摸文件；跨层只走 op 协议。
+end note
+
+note right of CAP
+  ops 层是“一件事一个 op”，
+  界面 / 控制口 / 脚本都走同一套。
+end note
+
+@enduml
