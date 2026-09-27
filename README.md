@@ -37,5 +37,13 @@
 - `evidence/校验-轮3.txt`：`-checkonly` rc=0（4/4）、`-tsvg` rc=0（4/4）、四节四样自检 4/4，另有**新增闸门**「错误占位检查」——全 11 张 svg 逐个 grep `Cannot find Graphviz/Syntax Error` ＝ **0**
   （本轮实测踩到：状态机图默认要 graphviz，加 `!pragma layout smetana` 前 `rc=0` 但 svg 是一张报错占位图 ⇒ **rc=0 ≠ 图对**）
 
+## 第 4 轮交付（2026-09-27，收尾轮）
+
+- `docs/13-通信图.md` · `docs/14-交互概览图.md` · `docs/15-定时图.md`：每张四样齐全（一句话 / 关键元素（术语中文）/ 共用例子最小示例 / 源与校验）
+- `docs/16-总校验表.md`：**全 14 张**总核对（图名 / 源 / 图 / rc / svg 字节 / 是否 smetana / 错误占位检查）＋ 合计行 ＋ **怎么复跑（四步命令）**
+- `src/communication-diagram.puml` · `src/interaction-overview-diagram.puml` · `src/timing-diagram.puml` → `figures/*.svg`（本轮 3 张，**累计 14 张**）
+- `evidence/校验-轮4.txt`：本轮 3 张 rc=0、全 14 张错误占位=0、四节四样自检 4/4
+- 本轮两个新坑（已修，已写进经验）：活动图/定时图**不接受游离 `note`**（用 `legend`）；定时图 `scale` 太大 → svg 562KB（改 `scale 100 as 30 pixels` 后 20.9KB）
+
 ## 工具（已就位，不许联网下）
 `/home/lwgat/tools/jdk-17.0.2/bin/java` ＋ `/vol1/1000/aicache/tools/plantuml.jar`（1.2024.8）；配方见 `roles-chat/env/UML建模-环境配方.md`，坑见 `roles-chat/experiences/research.investigator/UML交付与语法自测.md`。

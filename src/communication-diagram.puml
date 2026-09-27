@@ -1,0 +1,36 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 行为类第 5 张：通信图（Communication Diagram）
+!pragma layout smetana
+title 通信图：改第一个标签＝整块搬家（同一次交互，看“谁和谁有连线”）
+
+skinparam shadowing false
+
+object "用户" as U
+object "白板（Board）" as BOARD
+object "op 层（BlockOps）" as OPS
+object "笔记库（NoteStore）" as STORE
+object "笔记文件（.md）" as FILE
+object "索引库（IndexDb）" as DB
+object "主页（Home）" as HOME
+
+U --> BOARD : 1: 改标签 paper → 点「完成」
+BOARD --> OPS : 2: blk.save(标题, 标签, 正文)
+OPS --> STORE : 3: 保存块
+STORE --> FILE : 4: web.md 删块 / paper.md 写块
+STORE --> DB : 5: 更新块的所属文件与修改时间
+OPS --> HOME : 6: 返回「保存成功」
+HOME --> U : 7: 主页里这条随笔已在 paper 下
+
+note bottom of BOARD
+  **通信图与时序图画的是同一次交互**（改标签搬家）：
+  时序图按**时间顺序**往下排；通信图按**关系网**摆，
+  用**编号（1、2、3…）**表示先后。两者信息等价，看你想强调哪个。
+end note
+
+note right of FILE
+  4 这一步是关键：**文件是权威源**（旧文件删块、新文件写块），
+  5 只是更新索引副本。
+end note
+
+@enduml

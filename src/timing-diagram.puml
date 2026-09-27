@@ -1,0 +1,46 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 行为类第 7 张：定时图（Timing Diagram）
+!pragma layout smetana
+scale 100 as 30 pixels
+title 定时图：一次 WebDAV 同步里，状态随时间的推移与时限
+
+skinparam shadowing false
+
+robust "同步器（SyncRepo）" as SYNC
+concise "网络（WebDAV 服务器）" as NET
+
+@0
+SYNC is 空闲
+NET is 空闲
+
+@200
+SYNC is 比对基线
+
+@600
+NET is 传输中
+SYNC is 传输中
+
+@1800
+SYNC is 写索引
+NET is 空闲
+
+@2200
+SYNC is 完成
+SYNC is 空闲
+
+@3000
+SYNC is 空闲
+NET is 空闲
+
+SYNC@0 <-> @3000 : 一次同步的观测窗口
+NET@600 <-> @1800 : 网络真正在传的那段（1.2 秒）
+
+legend right
+  定时图看的是**时间轴 + 时限**：
+  横轴是时间（这里的刻度是按示例画的比例，不是实测秒表），
+  纵轴是“谁处在什么状态”。
+  它与时序图的区别：时序图看**消息顺序**，定时图看**一段时间的状态与时长**。
+endlegend
+
+@enduml

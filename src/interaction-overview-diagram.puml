@@ -1,0 +1,38 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 行为类第 6 张：交互概览图（Interaction Overview Diagram）
+!pragma layout smetana
+title 交互概览图：一条主线把几个场景串起来（编辑 / 导出 / 同步）
+
+skinparam shadowing false
+
+start
+:打开随笔、编辑并保存;
+note right: 这一格＝一次完整交互，展开就是**时序图 / 通信图**（改标签搬家）
+
+if (这次还要导出吗？) then (要)
+  :按标签导出（预览 → 写盘 / 分享）;
+  note right: 展开＝**活动图**（含 4 个分叉）
+else (不要)
+endif
+
+if (开启同步了吗？) then (开着)
+  :WebDAV 同步（比对基线 → 上传/下载）;
+  if (有冲突吗？) then (有)
+    :等待用户三选（保留本地 / 保留远端 / 跳过）;
+  else (没有)
+  endif
+else (没开)
+endif
+
+:回到主页（最近编辑的块）;
+stop
+
+legend bottom
+  **交互概览图＝“场景目录”**：每个方框是一次交互（可展开成时序图/通信图/活动图），
+  方框之间的箭头是**控制流**（像活动图）。它适合在手册开头给人一张“这个系统都会发生哪些事”的总图。
+  本图三个场景分别对应：编辑搬家＝`docs/04-时序图.md`（同一件事的通信图画在 `docs/13-通信图.md`）· 导出＝`docs/11-活动图.md` ·
+  同步＝mark-readnotes 自己的 `docs/同步规格.md`（基线 + 冲突三选）。
+endlegend
+
+@enduml

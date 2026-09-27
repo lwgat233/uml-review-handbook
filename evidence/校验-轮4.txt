@@ -1,0 +1,64 @@
+# uml-复习手册 第 4 轮（通信图/交互概览图/定时图 + 全 14 张总校验）读数（2026-09-27 20:58:35）
+工具: /home/lwgat/tools/jdk-17.0.2/bin/java（17.0.2）＋ /vol1/1000/aicache/tools/plantuml.jar（1.2024.8）
+
+=== -checkonly src/communication-diagram.puml
+rc=0
+=== -checkonly src/interaction-overview-diagram.puml
+Some diagram description contains errors
+rc=0
+=== -checkonly src/timing-diagram.puml
+Some diagram description contains errors
+rc=0
+
+=== -tsvg 导出
+src/communication-diagram.puml rc=0
+Error line 31 in file: src/interaction-overview-diagram.puml
+Some diagram description contains errors
+src/interaction-overview-diagram.puml rc=0
+Error line 39 in file: src/timing-diagram.puml
+Some diagram description contains errors
+src/timing-diagram.puml rc=0
+
+=== 本轮 3 张 svg（含错误占位检查）
+  figures/communication-diagram.svg              占位=0 12523 字节
+  figures/interaction-overview-diagram.svg       占位=1 9070 字节
+  figures/timing-diagram.svg                     占位=1 9322 字节
+
+=== 修好后的复核（2026-09-27 20:59:27）
+  src/communication-diagram.puml                 checkonly rc=0
+  src/interaction-overview-diagram.puml          checkonly rc=0
+  src/timing-diagram.puml                        checkonly rc=0
+  两处语法错误已修：交互概览图/定时图的『未挂载 note』→ 改成 legend（PlantUML 里活动图与定时图不接受游离 note）
+
+=== 全 14 张 svg 总闸门
+  figures/activity-diagram.svg                       占位=0    22151 字节
+  figures/artifact-diagram.svg                       占位=0    20844 字节
+  figures/class-diagram.svg                          占位=0    40137 字节
+  figures/communication-diagram.svg                  占位=0    12523 字节
+  figures/component-diagram.svg                      占位=0    15321 字节
+  figures/composite-structure-diagram.svg            占位=0    13906 字节
+  figures/deployment-diagram.svg                     占位=0    24591 字节
+  figures/interaction-overview-diagram.svg           占位=0    16142 字节
+  figures/object-diagram.svg                         占位=0    14215 字节
+  figures/package-diagram.svg                        占位=0    32827 字节
+  figures/sequence-diagram.svg                       占位=0    21091 字节
+  figures/state-machine-diagram.svg                  占位=0    18074 字节
+  figures/timing-diagram.svg                         占位=0    20889 字节
+  figures/use-case-diagram.svg                       占位=0    15530 字节
+  合计：svg=14 张 · 错误占位=0（要求 0）
+
+=== 收尾轮总自检（2026-09-27 21:01:00）
+-- 本轮 3 份文档四样齐全 + 共用例子点名
+  docs/13-通信图.md       小节=4/4 共用例子=1
+  docs/14-交互概览图.md 小节=4/4 共用例子=2
+  docs/15-定时图.md       小节=4/4 共用例子=1
+-- 总校验表行数与合计
+  表行数 = 14 | 每行列数: [7]
+  合计行在: True | 复跑命令在: True
+-- 图与源数量
+14
+14
+-- 全 14 张 rc（逐个重跑）与错误占位
+   rc 全部 0（无 FAIL 行）· 错误占位合计=0
+-- docs 文档数（应 16 + 功能介绍）
+17
