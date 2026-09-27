@@ -1,0 +1,48 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 结构类第 6 张：组合结构图（Composite Structure Diagram）
+!pragma layout smetana
+title 组合结构图：白板（Board）内部由哪些零件组成、零件怎么连
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+component "白板（Board）—— 打开一条随笔时的全屏编辑层" as BOARD {
+  component "归档区（标题输入 + 标签输入）" as ARCH
+  component "正文编辑器（textarea）" as BODY
+  component "工具栏（完成 / 预览 / ⋯）" as BAR
+  component "预览层（render.js + 离线三方库）" as PREV
+  component "小窗（sheet.js：⋯ 里的删除等动作）" as SHEET
+
+  port "op 端口（blk.get / blk.save）" as POP
+  port "渲染端口（markdown → DOM）" as PREN
+  port "系统端口（ui.open / 分享）" as PSYS
+}
+
+component "原生 op 层（BlockOps / OpsRouter）" as OPS
+component "系统浏览器 / 分享面板" as SYS
+
+ARCH -- BODY : 同一块的标题与正文
+BAR -- ARCH : 完成时把标题与标签取走
+BAR -- BODY
+BAR -- PREV : 「预览」切换
+BAR -- SHEET : 「⋯」弹出
+ARCH -- POP : 标签改了 → 触发整块搬家
+BODY -- PREN : 正文交给渲染器
+PREV -- PREN
+SHEET -- PSYS : 删除/分享类动作
+POP -- OPS : JS 桥调用
+PSYS -- SYS
+
+note bottom of BOARD
+  组合结构图看的是“**一个东西内部**”：哪些零件（part）、
+  对外留了哪些端口（port）、零件之间怎么连。它不问“有哪些种类”（那是类图）。
+end note
+
+note right of POP
+  我们的实现里，端口不是一个真实的语言构造
+  （它是 WebView 的 JS 桥字符串协议）——
+  这张图画的是**设计上的端口**，**待确认**：要不要在代码里显式化。
+end note
+
+@enduml

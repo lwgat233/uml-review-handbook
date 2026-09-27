@@ -1,0 +1,113 @@
+# uml-复习手册 第 3 轮（组合结构图/制品图/活动图/状态机图）语法校验读数（2026-09-27 20:55:31）
+工具: /home/lwgat/tools/jdk-17.0.2/bin/java（17.0.2）＋ /vol1/1000/aicache/tools/plantuml.jar（1.2024.8）
+
+=== -checkonly src/composite-structure-diagram.puml
+rc=0
+=== -checkonly src/artifact-diagram.puml
+rc=0
+=== -checkonly src/activity-diagram.puml
+rc=0
+=== -checkonly src/state-machine-diagram.puml
+rc=0
+
+=== -tsvg 导出
+src/composite-structure-diagram.puml rc=0
+src/artifact-diagram.puml rc=0
+src/activity-diagram.puml rc=0
+java.io.IOException: Cannot run program "/opt/local/bin/dot": error=2, No such file or directory
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1143)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1073)
+	at net.sourceforge.plantuml.dot.ProcessRunner.run(ProcessRunner.java:70)
+	at net.sourceforge.plantuml.dot.ProcessRunner.run(ProcessRunner.java:59)
+	at net.sourceforge.plantuml.dot.GraphvizVersionFinder.dotVersion(GraphvizVersionFinder.java:120)
+	at net.sourceforge.plantuml.dot.GraphvizVersionFinder.getVersion(GraphvizVersionFinder.java:75)
+	at net.sourceforge.plantuml.dot.GraphvizVersions.checkVersionSlow(GraphvizVersions.java:71)
+	at net.sourceforge.plantuml.dot.GraphvizVersions.getVersion(GraphvizVersions.java:64)
+	at net.sourceforge.plantuml.svek.DotStringFactory.getGraphvizVersionInternal(DotStringFactory.java:276)
+	at net.sourceforge.plantuml.svek.DotStringFactory.getGraphvizVersion(DotStringFactory.java:265)
+	at net.sourceforge.plantuml.svek.GraphvizImageBuilder.printEntityInternal(GraphvizImageBuilder.java:380)
+	at net.sourceforge.plantuml.svek.GraphvizImageBuilder.printEntity(GraphvizImageBuilder.java:362)
+	at net.sourceforge.plantuml.svek.GraphvizImageBuilder.printEntities(GraphvizImageBuilder.java:354)
+	at net.sourceforge.plantuml.svek.GraphvizImageBuilder.buildImage(GraphvizImageBuilder.java:224)
+	at net.sourceforge.plantuml.svek.GroupMakerState.getImage(GroupMakerState.java:142)
+	at net.sourceforge.plantuml.dot.CucaDiagramSimplifierState.simplify(CucaDiagramSimplifierState.java:64)
+	at net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek.createFileInternal(CucaDiagramFileMakerSvek.java:89)
+	at net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek.createFile(CucaDiagramFileMakerSvek.java:69)
+	at net.atmp.CucaDiagram.exportDiagramInternal(CucaDiagram.java:475)
+	at net.sourceforge.plantuml.UmlDiagram.exportDiagramNow(UmlDiagram.java:139)
+	at net.sourceforge.plantuml.AbstractPSystem.exportDiagram(AbstractPSystem.java:210)
+	at net.sourceforge.plantuml.PSystemUtils.exportDiagramsDefault(PSystemUtils.java:207)
+	at net.sourceforge.plantuml.PSystemUtils.exportDiagrams(PSystemUtils.java:96)
+	at net.sourceforge.plantuml.SourceFileReaderAbstract.getGeneratedImages(SourceFileReaderAbstract.java:190)
+	at net.sourceforge.plantuml.Run.manageFileInternal(Run.java:526)
+	at net.sourceforge.plantuml.Run.processArgs(Run.java:420)
+	at net.sourceforge.plantuml.Run.manageAllFiles(Run.java:387)
+	at net.sourceforge.plantuml.Run.main(Run.java:222)
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.base/java.lang.ProcessImpl.forkAndExec(Native Method)
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:314)
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:244)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1110)
+	... 27 more
+src/state-machine-diagram.puml rc=0
+
+=== figures/ 产物
+  figures/activity-diagram.svg 22151 bytes
+  figures/artifact-diagram.svg 20844 bytes
+  figures/class-diagram.svg 40137 bytes
+  figures/component-diagram.svg 15321 bytes
+  figures/composite-structure-diagram.svg 13906 bytes
+  figures/deployment-diagram.svg 24591 bytes
+  figures/object-diagram.svg 14215 bytes
+  figures/package-diagram.svg 32827 bytes
+  figures/sequence-diagram.svg 21091 bytes
+  figures/state-machine-diagram.svg 3964 bytes
+  figures/use-case-diagram.svg 15530 bytes
+=== 每 svg 的 <svg 计数
+figures/composite-structure-diagram.svg:1
+figures/artifact-diagram.svg:1
+figures/activity-diagram.svg:1
+figures/state-machine-diagram.svg:1
+
+=== 重导（状态机图加 !pragma layout smetana 后）2026-09-27 20:56:01
+checkonly rc=0
+tsvg rc=0
+
+=== 有效性闸门（rc=0 不等于图对：逐个 svg 查错误占位）
+  figures/composite-structure-diagram.svg        错误占位=0 字节=13906
+  figures/artifact-diagram.svg                   错误占位=0 字节=20844
+  figures/activity-diagram.svg                   错误占位=0 字节=22151
+  figures/state-machine-diagram.svg              错误占位=0 字节=18074
+=== 本轮 4 张 svg 文本抽样（确认是图不是报错）
+  --- composite-structure
+     组合结构图：白板（Board）内部由哪些零件组成、零件怎么连 组合结构图：白板（Board）内部由哪些零件组成、零件怎么连 白板（Board）—— 打开一条随笔时的全屏编辑层 原生 op 层（BlockOps / OpsRouter） 系统浏览器 / 分享面板 组合结构图看的是“ 一个东西内部 ”
+  --- artifact
+     制品图：这个项目实际交付了哪些文件、谁装进谁 制品图：这个项目实际交付了哪些文件、谁装进谁 mark-readnotes-debug-20260922-r10.apk classes3.dex（原生层：ops / notes / export / sync） assets/ui/ index.ht
+  --- activity
+     活动图：从点「导出」到文件落到目录（或分享出去） 活动图：从点「导出」到文件落到目录（或分享出去） 点主页「导出」 打开导出小窗（读标签与块：idx.blocks / exp.tags） 点掉不想导出的标签 要 要不要排除某些标签? 不要 「导出并预览」——只生成文件树， 不写盘 回去改排除标签 
+  --- state-machine
+     状态机图：索引什么时候扫、什么时候不扫 状态机图：索引什么时候扫、什么时候不扫 扫描中 未授权 就绪 失败 过期 这就是“懒扫描”：冷启动走 就绪 → 就绪 这条自环， 不进扫描中 （实测日志 `scan=skipped(reason=startup)`）。 所以放在网络盘上、目录很大也不会一开机
+
+=== 四节四样自检（2026-09-27 20:56:37）
+  docs/09-组合结构图.md 小节数=4/4 · 共用例子点名=1
+  docs/10-制品图.md 小节数=4/4 · 共用例子点名=2
+  docs/11-活动图.md 小节数=4/4 · 共用例子点名=1
+  docs/12-状态机图.md 小节数=4/4 · 共用例子点名=1
+-- 全 11 张图的有效性闸门（rc=0 ≠ 图对：查错误占位）
+  figures/activity-diagram.svg                   占位=0 22151 字节
+  figures/artifact-diagram.svg                   占位=0 20844 字节
+  figures/class-diagram.svg                      占位=0 40137 字节
+  figures/component-diagram.svg                  占位=0 15321 字节
+  figures/composite-structure-diagram.svg        占位=0 13906 字节
+  figures/deployment-diagram.svg                 占位=0 24591 字节
+  figures/object-diagram.svg                     占位=0 14215 字节
+  figures/package-diagram.svg                    占位=0 32827 字节
+  figures/sequence-diagram.svg                   占位=0 21091 字节
+  figures/state-machine-diagram.svg              占位=0 18074 字节
+  figures/use-case-diagram.svg                   占位=0 15530 字节
+  合计错误占位=0（0 = 全是真图）
+-- 轮3 四个 rc（重跑）
+  src/composite-structure-diagram.puml rc=0
+  src/artifact-diagram.puml rc=0
+  src/activity-diagram.puml rc=0
+  src/state-machine-diagram.puml rc=0

@@ -1,0 +1,45 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 行为类第 3 张：活动图（Activity Diagram）—— 按标签导出的全过程
+title 活动图：从点「导出」到文件落到目录（或分享出去）
+
+skinparam shadowing false
+
+start
+:点主页「导出」;
+:打开导出小窗（读标签与块：idx.blocks / exp.tags）;
+if (要不要排除某些标签?) then (要)
+  :点掉不想导出的标签;
+else (不要)
+endif
+if (选哪条路?) then (先看再说)
+  :「导出并预览」——只生成文件树，**不写盘**;
+  if (预览满意吗?) then (满意)
+  else (不满意)
+    :回去改排除标签;
+    stop
+  endif
+else (直接导出)
+endif
+if (目标目录授权过吗?) then (没有)
+  :弹系统目录选择器（SAF）;
+else (有)
+endif
+:按标签写盘（第 1 个标签＝一级目录、第 2 个＝二级，文件名＝标题）;
+:同名文件覆盖（不堆 -2 副本）;
+if (还要分享给别人吗?) then (要)
+  :先写到 cache/share/;
+  :经 FileProvider 交给系统分享面板;
+else (不要)
+endif
+:回到主页（可选看导出结果）;
+stop
+
+note right
+  活动图的重点：**步骤顺序 + 分支（if/else）**。
+  这张图里两个“分叉点”值得注意：
+  ① “导出并预览”与“直接导出”是**两条不同的路**（预览不写盘，是判据之一）；
+  ② 目录没授权过时会**插入一步系统选择器**（这是外部动作，不是应用自己完成的）。
+end note
+
+@enduml

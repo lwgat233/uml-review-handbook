@@ -1,0 +1,53 @@
+@startuml
+' UML 复习手册 · 共用小例子：随笔 App（mark-readnotes）
+' 结构类第 7 张：制品图（Artifact Diagram）
+!pragma layout smetana
+title 制品图：这个项目实际交付了哪些文件、谁装进谁
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+artifact "mark-readnotes-debug-20260922-r10.apk" as APK
+file "classes3.dex（原生层：ops / notes / export / sync）" as DEX
+folder "assets/ui/" as UI
+file "index.html" as HTML
+file "registry.js（功能登记表 31 项）" as REG
+file "home.js / board.js / render.js / export.js / settings.js / sync.js" as JS
+folder "assets/ui/vendor/" as VEN
+file "markdown-it 14.1.0 · texmath · task-lists · KaTeX 0.18.7（离线内置 + integrity）" as LIB
+artifact "AndroidManifest.xml" as MAN
+
+artifact "README.md · docs/*.md（规格 / 验收 / 口径）" as DOCS
+artifact "tools/boards/*.sh（分板块验收脚本）" as TEST
+artifact "tools/check_coverage.py（覆盖自检）" as COV
+artifact "evidence/（每轮读数：DOM / 字节 / SQLite 行）" as EVI
+artifact "THIRD-PARTY-NOTICES.md（三方来源与许可）" as NOTICE
+
+APK *-- MAN
+APK *-- DEX
+APK *-- UI
+UI *-- HTML
+UI *-- REG
+UI *-- JS
+UI *-- VEN
+VEN *-- LIB
+
+DOCS ..> APK : 记录它的判据（不装进包）
+TEST ..> APK : 每次验收先证明“设备跑的是这一版”（页面 data-build）
+COV ..> REG : 读登记表报缺口
+EVI ..> TEST : 每次跑完留读数
+NOTICE ..> LIB : 声明三方来源与许可
+
+note bottom of APK
+  制品图（Artifact Diagram）看的是“**实际存在的东西**”：
+  构建出来的包、包里的文件、仓库里的文档与脚本。
+  它不管类怎么设计，只管“哪些文件真的在、谁包含谁”。
+end note
+
+note right of EVI
+  哪个文件属于“交付物”、哪个只是“过程记录”，
+  在这张图上是一眼能分出来的：包里的＝要装到设备上的；
+  docs/tools/evidence＝给人看、给验收用的。
+end note
+
+@enduml

@@ -30,5 +30,12 @@
 - `src/object-diagram.puml` · `src/package-diagram.puml` · `src/component-diagram.puml` · `src/deployment-diagram.puml` → `figures/*.svg`（本轮 4 张，累计 7 张）
 - `evidence/校验-轮2.txt`：`-checkonly` rc=0（4/4）、`-tsvg` rc=0（4/4）、四节四样自检 4/4
 
+## 第 3 轮交付（2026-09-27）
+
+- `docs/09-组合结构图.md` · `docs/10-制品图.md` · `docs/11-活动图.md` · `docs/12-状态机图.md`：每张四样齐全（一句话 / 关键元素（术语中文）/ 共用例子最小示例 / 源与校验）
+- `src/composite-structure-diagram.puml` · `src/artifact-diagram.puml` · `src/activity-diagram.puml` · `src/state-machine-diagram.puml` → `figures/*.svg`（本轮 4 张，**累计 11 张**）
+- `evidence/校验-轮3.txt`：`-checkonly` rc=0（4/4）、`-tsvg` rc=0（4/4）、四节四样自检 4/4，另有**新增闸门**「错误占位检查」——全 11 张 svg 逐个 grep `Cannot find Graphviz/Syntax Error` ＝ **0**
+  （本轮实测踩到：状态机图默认要 graphviz，加 `!pragma layout smetana` 前 `rc=0` 但 svg 是一张报错占位图 ⇒ **rc=0 ≠ 图对**）
+
 ## 工具（已就位，不许联网下）
 `/home/lwgat/tools/jdk-17.0.2/bin/java` ＋ `/vol1/1000/aicache/tools/plantuml.jar`（1.2024.8）；配方见 `roles-chat/env/UML建模-环境配方.md`，坑见 `roles-chat/experiences/research.investigator/UML交付与语法自测.md`。
